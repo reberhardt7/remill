@@ -12914,9 +12914,7 @@ bool TryDecodeSTR_D_LDST_IMMPOST(const InstData &, Instruction &) {
 //  30 0 size     0
 //  31 0 size     1
 // STR  <Qt>, [<Xn|SP>], #<simm>
-bool TryDecodeSTR_Q_LDST_IMMPOST(const InstData &, Instruction &) {
-  return false;
-}
+bool TryDecodeSTR_Q_LDST_IMMPOST(const InstData &, Instruction &);
 
 // STR STR_B_ldst_immpre:
 //   0 x Rt       0

@@ -3388,6 +3388,21 @@ bool TryDecodeSTR_Q_LDST_IMMPRE(const InstData &data, Instruction &inst) {
   return TryDecodeSTR_Vn_LDST_IMMPRE(data, inst, kRegQ);
 }
 
+static bool TryDecodeSTR_Vn_LDST_IMMPOST(const InstData &data, Instruction &inst, RegClass val_class) {
+  uint64_t scale = DecodeScale(data);
+  if (scale < 4) {
+    return false;
+  }
+  auto num_bits = ReadRegSize(val_class);
+  AddRegOperand(inst, kActionRead, val_class, kUseAsValue, data.Rt);
+  uint64_t offset = static_cast<uint64_t>(data.imm9.simm9);
+  AddPostIndexMemOp(inst, kActionWrite, num_bits, data.Rn, offset);
+  return true;
+}
+bool TryDecodeSTR_Q_LDST_IMMPOST(const InstData &data, Instruction &inst) {
+  return TryDecodeSTR_Vn_LDST_IMMPOST(data, inst, kRegQ);
+}
+
 static bool TryDecodeLDR_Vn_LDST_POS(const InstData &data, Instruction &inst,
                                      RegClass val_class) {
   uint64_t scale = DecodeScale(data);
